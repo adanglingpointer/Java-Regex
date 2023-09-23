@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 public class Regex {
     public static void main(String[] args) {
 
@@ -47,7 +49,7 @@ public class Regex {
         System.out.println("c".matches("\\d"));  // false
         System.out.println("4".matches("\\d"));  // true
 
-        System.out.println("\nQuantifier:");
+        System.out.println("\nQuantifiers:");
         // ------------------------------ //
 
         System.out.println("123-456-7890"
@@ -55,6 +57,43 @@ public class Regex {
 
         System.out.println("123.456.7890"
                 .matches("\\d{3}[-.]\\d{3}[-.]\\d{4}"));  // true
+
+        System.out.println("1 123.456.7890"
+                .matches("\\d[.\\s]\\d{3}[.\\s]\\d{3}[.\\s]\\d{4}"));  // true
+                // \\s for spaces
+
+        System.out.println("a  -   b".matches("\\w[-\\s]+\\w"));  // true
+        // + for one or more of the character(s) specified prior
+
+        System.out.println("ab".matches("\\w[-\\s]*\\w"));  // true
+        // * for zero or more of the character(s) specified prior
+
+        System.out.println("azb".matches("\\w[-\\s]*\\w"));  // false
+
+        System.out.println("a b".matches("\\w\\s?\\w"));  // true
+        // ? for zero or one of the character(s) specified prior
+
+        System.out.println("a  b".matches("\\w\\s?\\w"));  // false
+
+        System.out.println("123 45678"
+                .matches("\\d{3}[\\s-]\\d{2,5}"));  // true
+        // , for a range of numbers
+
+        System.out.println("123-456"
+                .matches("\\d{3}[\\s-]\\d{2,5}"));  // true
+
+        System.out.println("454546"
+                .matches("\\d{4,}"));  // true
+        // only a lower limit, no upper limit
+
+        System.out.println("123 456-7890"
+                .matches("(\\d{3}[-\\s]){2}\\d{4}"));  // true
+        // grouping together regex inside parens
+
+        System.out.println("\nPatterns");
+        // --------------------------- //
+
+        
 
     }
 }
