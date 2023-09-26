@@ -1,3 +1,4 @@
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Regex {
@@ -93,7 +94,35 @@ public class Regex {
         System.out.println("\nPatterns");
         // --------------------------- //
 
-        
+        String regex = "(1[-.,\\s]?)?(\\d{3}[-.,\\s]?){1,2}\\d{4}";
+        // each set of parens are a 'capture group'.
+        // Two capture groups here
 
+        String phoneNumber = "232.333.2365";
+        Pattern pat = Pattern.compile(regex);
+        Matcher mat = pat.matcher(phoneNumber);
+
+        if (mat.matches()) {
+            System.out.println(mat.group(1));  // null
+            // no country code
+
+            System.out.println(mat.group(2));  // 333.
+            // when using quantifiers with capture groups
+            // only comes back with the last match
+            // 232 is skipped in this case
+        }
+
+        String phoneNumber2 = "1.232.333.2365";
+        String regex2 = "(1[-.,\\s]?)?(\\d{3}[-.,\\s]?)(\\d{3}[-.,\\s]?)\\d{4}";
+
+        Pattern pat2 = Pattern.compile(regex2);
+        Matcher mat2 = pat2.matcher(phoneNumber2);
+
+        if (mat2.matches()) {
+            System.out.println(mat2.group(1));  // 1.
+            System.out.println(mat2.group(2));  // 232.
+            System.out.println(mat2.group(3));  // 333.
+            System.out.println(mat2.group(0));  // 1.232.333.2365
+        }
     }
 }
