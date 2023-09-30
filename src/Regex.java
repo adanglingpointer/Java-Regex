@@ -124,5 +124,64 @@ public class Regex {
             System.out.println(mat2.group(3));  // 333.
             System.out.println(mat2.group(0));  // 1.232.333.2365
         }
+
+        // Note: outer captures groups are numbered prior to inner
+        String regex3 = "((\\d{1,2})[-.,\\s]?)?((\\d{3})[-.,\\s]?)((\\d{3})[-.,\\s]?)(\\d{4})";
+        String phoneNumber3 = "12.232.333.2365";
+
+        Pattern pat3 = Pattern.compile(regex3);
+        Matcher mat3 = pat3.matcher(phoneNumber3);
+
+        if (mat3.matches()) {
+            System.out.format("Country code: %s\n", mat3.group(2));
+            System.out.format("Area code: %s\n", mat3.group(4));
+            System.out.format("Exchange: %s\n", mat3.group(6));
+            System.out.format("Line number: %s\n", mat3.group(7));
+        }
+
+        // To tell regex not to capture a group inside parens, use ?:
+        String regex4 = "(?:(\\d{1,2})[-.,\\s]?)?(?:(\\d{3})[-.,\\s]?)(?:(\\d{3})[-.,\\s]?)(\\d{4})";
+        String phoneNumber4 = "12.232.333.2365";
+
+        Pattern pat4 = Pattern.compile(regex4);
+        Matcher mat4 = pat4.matcher(phoneNumber4);
+
+        if (mat4.matches()) {
+            System.out.format("Country code: %s\n", mat4.group(1));
+            System.out.format("Area code: %s\n", mat4.group(2));
+            System.out.format("Exchange: %s\n", mat4.group(3));
+            System.out.format("Line number: %s\n", mat4.group(4));
+        }
+
+        System.out.println("\nNamed capture groups:");
+        // --------------------------- //
+
+        // Named capture groups:
+        // ?<name>
+        String regex5 = "(?:(?<countryCode>\\d{1,2})[-.,\\s]?)?(?:(\\d{3})[-.,\\s]?)(?:(\\d{3})[-.,\\s]?)(\\d{4})";
+        String phoneNumber5 = "12.232.333.2365";
+
+        Pattern pat5 = Pattern.compile(regex5);
+        Matcher mat5 = pat5.matcher(phoneNumber5);
+
+        if (mat5.matches()) {
+            System.out.format("Country code: %s\n", mat5.group("countryCode"));
+            System.out.format("Area code: %s\n", mat5.group(2));
+            System.out.format("Exchange: %s\n", mat5.group(3));
+            System.out.format("Line number: %s\n", mat5.group(4));
+        }
+
+        System.out.println("\nRegex Comments");
+        // --------------------------- //
+
+        //  Regex comments disallows spaces
+
+        String regex6 = """
+                (?:(?<countryCode>\\d{1,2})[-.,\\s]?)?
+                (?:(?<areaCode>\\d{3})[-.,\\s]?)
+                (?:(?<exchange>\\d{3})[-.,\\s]?)
+                """
+        String
+
     }
 }
