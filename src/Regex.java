@@ -177,11 +177,21 @@ public class Regex {
         //  Regex comments disallows spaces
 
         String regex6 = """
-                (?:(?<countryCode>\\d{1,2})[-.,\\s]?)?
-                (?:(?<areaCode>\\d{3})[-.,\\s]?)
-                (?:(?<exchange>\\d{3})[-.,\\s]?)
-                """
-        String
+                (?:(?<countryCode>\\d{1,2})[-.,\\s]?)? # Gets country code
+                (?:(?<areaCode>\\d{3})[-.,\\s]?) # Gets area code
+                (?:(?<exchange>\\d{3})[-.,\\s]?) # Gets exchange
+                (?<lineNumber>\\d{4}) # Gets line number""";
+        String phoneNumber6 = "12.232.333.2365";
+
+        Pattern pat6 = Pattern.compile(regex6, Pattern.COMMENTS);
+        Matcher mat6 = pat6.matcher(phoneNumber6);
+
+        if (mat6.matches()) {
+            System.out.format("Country code: %s\n", mat6.group("countryCode"));
+            System.out.format("Area code: %s\n", mat6.group("areaCode"));
+            System.out.format("Exchange: %s\n", mat6.group("exchange"));
+            System.out.format("Line number: %s\n", mat6.group("lineNumber"));
+        }
 
     }
 }
